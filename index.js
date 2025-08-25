@@ -10,7 +10,6 @@ function detectLanguage(text) {
 function generateSmartResponse(text, lang) {
     const lowerText = text.toLowerCase()
     
-    // Greetings
     if (lowerText.includes('hi') || lowerText.includes('hello') || lowerText.includes('hujambo') || lowerText.includes('habari') || lowerText.includes('sasa')) {
         const timeOfDay = new Date().getHours()
         if (timeOfDay < 12) {
@@ -22,7 +21,6 @@ function generateSmartResponse(text, lang) {
         }
     }
     
-    // Advice requests
     if (lowerText.includes('advice') || lowerText.includes('ushauri')) {
         if (lowerText.includes('21') || lowerText.includes('young')) {
             return lang === 'sw' ? 
@@ -34,39 +32,32 @@ function generateSmartResponse(text, lang) {
             'I\'m happy to give advice! But I\'d like to know more about your situation so I can give you suitable advice. Is it about work, relationships, education, or something else?'
     }
     
-    // Time questions
     if (lowerText.includes('time') || lowerText.includes('saa') || lowerText.includes('sangapi')) {
         const now = new Date()
         const timeStr = now.toLocaleTimeString('en-US', { hour12: false })
         return lang === 'sw' ? `Saa sasa ni ${timeStr}. Je, kuna kitu kingine unachotaka kujua?` : `Current time is ${timeStr}. Is there anything else you'd like to know?`
     }
     
-    // How are you
     if (lowerText.includes('how are you') || lowerText.includes('habari yako') || lowerText.includes('mambo vipi')) {
         return lang === 'sw' ? 'Mimi ni mzuri, asante kwa kuuliza! Natumai wewe pia uko vizuri. Je, kuna kitu unachotaka tuzungumze?' : 'I\'m doing well, thanks for asking! I hope you\'re doing well too. Is there something you\'d like to talk about?'
     }
     
-    // Positive responses
     if (lowerText === 'good' || lowerText === 'fine' || lowerText === 'okay' || lowerText === 'nzuri' || lowerText === 'poa') {
         return lang === 'sw' ? 'Vizuri sana! Nimefurahi kusikia hivyo. Je, kuna kitu unachotaka tuzungumze au kujua?' : 'That\'s great! I\'m happy to hear that. Is there something you\'d like to talk about or know?'
     }
     
-    // Agreement
     if (lowerText === 'yeah' || lowerText === 'yes' || lowerText === 'ndio' || lowerText === 'sawa') {
         return lang === 'sw' ? 'Sawa! Nini ungependa tuzungumze? Niko hapa kukusaidia.' : 'Alright! What would you like to talk about? I\'m here to help.'
     }
     
-    // Thanks
     if (lowerText.includes('thank') || lowerText.includes('asante')) {
         return lang === 'sw' ? 'Karibu sana! Nimefurahi kukusaidia. Je, kuna kitu kingine?' : 'You\'re very welcome! I\'m happy to help. Is there anything else?'
     }
     
-    // Goodbye
     if (lowerText.includes('bye') || lowerText.includes('kwaheri')) {
         return lang === 'sw' ? 'Kwaheri! Tuonane tena. Uwe na siku njema!' : 'Goodbye! See you again. Have a great day!'
     }
     
-    // Default response
     return lang === 'sw' ? 
         'Naelewa unachosema. Je, unaweza kunieleza zaidi ili niweze kukusaidia vizuri zaidi?' :
         'I understand what you\'re saying. Could you tell me more so I can help you better?'
@@ -85,7 +76,6 @@ async function startBot() {
             console.log("📱 QR Code:", qr)
             console.log("Scan this QR code with WhatsApp")
             
-            // Generate HTML file with QR code
             const fs = require('fs')
             const html = `<!DOCTYPE html>
 <html>
@@ -134,15 +124,13 @@ async function startBot() {
         console.log(`📩 New message from ${sender}: ${text}`)
 
         try {
-            // Generate smart response
             const language = detectLanguage(text)
             const response = generateSmartResponse(text, language)
             
-            // Add typing delay for natural conversation feel
             setTimeout(async () => {
                 await sock.sendMessage(sender, { text: response })
                 console.log(`🤖 Reply sent (${language}): ${response}`)
-            }, 1000 + Math.random() * 2000) // 1-3 second delay
+            }, 1000 + Math.random() * 2000)
             
         } catch (error) {
             console.error("❌ Error:", error)
