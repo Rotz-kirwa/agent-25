@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsApp QR Code</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+</head>
+<body>
+    <h2>Scan this QR code with WhatsApp</h2>
+    <canvas id="qrcode"></canvas>
+    <script>
+        window.onload = function() {
+            new QRious({
+                element: document.getElementById('qrcode'),
+                value: "2@+XoQJUb8EqsLzCrjp4yrhuGeDhmzMBb0xPzwe/GVwoy5jxshbEnbTIUvIzP+el/raXkZ1kkPqx/A3DmZRchNOXpG1LvTGlEfSds=,nyWWIVsQkPAb3M/wcspPuLWr7KdsVu++riY1FV/Nvio=,4HCxxL4wYcE5tXHqGwBsSqCk2P60m2lkUXa3xKCId30=,dIb0F2knynKj8LamFDPeqLeJTXLCUaAYEg/COg5Onz0=",
+                size: 256
+            });
+        };
+    </script>
+</body>
+</html>
